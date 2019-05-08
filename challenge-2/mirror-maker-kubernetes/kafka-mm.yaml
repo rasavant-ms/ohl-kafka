@@ -6,12 +6,12 @@ data:
   run.sh: |
     #!/bin/sh
     CONSUMER_CONFIG="bootstrap.servers=$CONSUMER_IP\nclient.id=$CONSUMER_CLIENT_ID\ngroup.id=$CONSUMER_GROUP_ID\nexclude.internal.topics=true"
-    echo $CONSUMER_CONFIG > consumer.config
+    echo $CONSUMER_CONFIG > /usr/bin/consumer.config
 
     PRODUCER_CONFIG="bootstrap.servers=$PRODUCER_ENDPOINT\nclient.id=$PRODUCER_CLIENT_ID\nsasl.mechanism=PLAIN\nsecurity.protocol=SASL_SSL\nsasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username=\"\$ConnectionString\" password=\"$PRODUCER_PASSWORD\";"
-    echo $PRODUCER_CONFIG > producer.config
+    echo $PRODUCER_CONFIG > /usr/bin/producer.config
 
-    /usr/bin/kafka-mirror-maker --consumer.config /usr/src/mirror-maker/consumer.config --producer.config /usr/src/mirror-maker/producer.config --whitelist \'$WHITELIST\'
+    /usr/bin/kafka-mirror-maker --consumer.config /usr/bin/consumer.config --producer.config /usr/bin/producer.config --whitelist \'$WHITELIST\'
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -31,7 +31,7 @@ spec:
         volumeMounts:
         - name: vol
           mountPath: "/mnt/mirror-maker"
-        command: ['sh', '-c', 'cp /mnt/mirror-maker/* /usr/bin/ && /usr/bin/run.sh']
+        command: ['sh', '-c', 'cp /mnt/mirror-maker/* /usr/bin/ && chmod +x /usr/bin/run.sh && /usr/bin/run.sh']
         env:
         - name: "WHITELIST"
           value: ".*"
@@ -47,3 +47,7 @@ spec:
           value: "mirror_maker_producer" 
         - name: "PRODUCER_PASSWORD"
           value: "EH_CONNECTIONSTRING"
+      volumes:
+      - name: vol
+        configMap:
+          name: mirror-maker-script
