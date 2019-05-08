@@ -2,14 +2,10 @@
 
 ## Requirements:
 
-#### For a minimally viable Kafka Cluster, you need the following:
-- 2 Kafka brokers
-- 1 Zookeeper instance
-- Replication Factor of 1
-
-#### Challenge Requirements:
 - An AKS Cluster with at least two nodes
 - At least two Kafka brokers to ensure high availability
+    - A minimum viable Kafka Cluster will have 2 Brokers / 1 Zookeeper / Replication Factor of 1
+    - The Helm Chart defaults to a 3 Broker / 3 Zookeeper / Replication Factor of 3 setup, which is also acceptable
 - Kafka broker accessible via public endpoint
 - Schema Registry accessible via public endpoint
 
