@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <appSettings>
+    <add key="AZURE_SQL" value=".database.windows.net"/>
+    <add key="AZURE_SQL_USERNAME" value="badgeapp"/>
+    <add key="AZURE_SQL_PASSWORD" value="Str0ng_Passw0rd!"/>
+    <add key="AZURE_SQL_DATABASE" value="StackOverflowSmall"/>
+    <add key="KAFKA_BROKERS" value=""/>
+    <add key="KAFKA_TOPIC" value="schematest"/>
+  </appSettings>
+</configuration>
