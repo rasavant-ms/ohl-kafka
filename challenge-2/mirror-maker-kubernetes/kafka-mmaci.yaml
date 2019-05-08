@@ -1,0 +1,33 @@
+
+apiVersion: 2018-10-01
+location: eastus
+name: mmaci1
+properties:
+  containers:
+  - name: mirror-maker
+    properties:
+      image: ohlkafka.azurecr.io/ohl-mirrormaker
+      resources:
+        requests:
+          cpu: 1
+          memoryInGb: 1.5
+      environmentVariables:
+      - name: "WHITELIST"
+        value: ".*"
+      - name: "CONSUMER_IP"
+        value: "52.179.10.56:9092"
+      - name: "CONSUMER_CLIENT_ID"
+        value: "mirror_maker_consumer" 
+      - name: "CONSUMER_GROUP_ID"
+        value: "example-mirrormaker-group" 
+      - name: "PRODUCER_ENDPOINT"
+        value: "team1kafka.servicebus.windows.net:9093" 
+      - name: "PRODUCER_CLIENT_ID"
+        value: "mirror_maker_producer"
+      - name: "PRODUCER_PASSWORD"
+        value: "Endpoint=sb://team1kafka.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=YYTQYXA4Sah6jIP96PpUmTvt+k3T9EdpjvY8Iri0p8g="
+  osType: Linux
+  restartPolicy: Always
+tags: null
+type: Microsoft.ContainerInstance/containerGroups
+
