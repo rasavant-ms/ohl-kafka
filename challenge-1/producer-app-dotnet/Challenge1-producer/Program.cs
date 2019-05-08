@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data.SqlClient;
 using Dapper;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Data;
@@ -91,13 +92,13 @@ namespace Challenge1_producer
             
             using (var connection = new SqlConnection(_connectionString))
             {
-                var badgeEvent = await connection.QueryAsync<BadgeEvent>(
+                var badgeEvents = await connection.QueryAsync<BadgeEvent>(
                     "Challenge1.GetBadge",
                     commandType: CommandType.StoredProcedure);
 
-                _logger.Info($"Got 1 badge event from database.");
+                _logger.Info($"Got {badgeEvents.Count()} badge event(s) from database.");
 
-                return badgeEvent;
+                return badgeEvents;
             };
         }
 
@@ -116,21 +117,23 @@ namespace Challenge1_producer
 
                     foreach (var b in badgeEvent)
                     {
+                        _logger.Info("Sending Badge to Kafka...");
+
                         var p = JsonConvert.SerializeObject(b);
                         try
                         {
                             var deliveryReport = await producer.ProduceAsync(TopicName, new Message<string, string> { Value = p.ToString() });
 
-                            _logger.Info($"delivered to: {deliveryReport.TopicPartitionOffset}");
+                            _logger.Info($"Badge delivered to: {deliveryReport.TopicPartitionOffset}");
                         }
                         catch (ProduceException<string, string> exception)
                         {
-                            _logger.Error(exception, $"failed to deliver message: {exception.Message} [{exception.Error.Code}]");
+                            _logger.Error(exception, $"Failed to deliver message: {exception.Message} [{exception.Error.Code}]");
                             break;
                         }
                         catch (Exception exception)
                         {
-                            _logger.Error(exception, $"failed to deliver message: {exception.Message}");
+                            _logger.Error(exception, $"Failed to deliver message: {exception.Message}");
                             break;
                         }
                     }
