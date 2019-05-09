@@ -12,21 +12,19 @@ pip3 install -r requirements.txt
 
 The libraries required should be: FreeTDS and librdkafka.
 
-### Common problems
-
-If you run into an issue with connecting to Azure SQL:
+# Installing from a fresh Ubuntu machine
 
 ```shell
-pip3 uninstall pymssql
-pip3 install --no-binary pymssql pymssql
+sudo apt-get update
+sudo apt install python-pip
+sudo apt install unixodbc-dev
+pip install pyodbc
+pip install -r requirements.txt
 ```
 
-If you run into an error about a missing reference to ``Cython`` you need to install it first before repeating the ``requirements.txt`` step above. This is caused by an issue with Pip.
+Follow the instructions [here](https://docs.microsoft.com/en-us/sql/connect/odbc/linux-mac/installing-the-microsoft-odbc-driver-for-sql-server?view=sql-server-2017#ubuntu-1404-1604-1710-and-1804) to install the SQL server driver for Linux/Ubuntu.
 
-```shell
-pip3 install Cython
-pip3 install -r requirements.txt
-```
+# Usage
 
 You can now run the script to see the available options:
 
