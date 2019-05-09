@@ -47,7 +47,7 @@ You will need to create static IPs ahead of time to supply to the Helm chart via
 
 For this challenge you will be using the public Schema Registry Helm Chart. You will need to set up a `values.yaml` file to allow external access.
 
-You will need to set up Schema Registry to connect to your existing Kafka cluster. Since we are not using TLS authentication, make sure to set the `external.servicePort` setting to something other than 443.
+You will need to set up Schema Registry to connect to your existing Kafka cluster. Since we are not using TLS authentication, make sure to set the `external.servicePort` setting to 8081.
 
 **Note:** Make sure to use a name other than "schema-registry" for the chart.
 
