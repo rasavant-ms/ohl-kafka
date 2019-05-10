@@ -30,7 +30,7 @@ For the challenges, you will be using Helm, which is an open source package mana
 
 For this challenge you will be using the public Kafka Helm Chart. You will need to set up a `values.yaml` file to allow external access.
 
-You will be using the `LoadBalancer` external service as NodePort is not supported on AKS. The `LoadBalancers` will all need to use the same port and do not need to be distinct, so you will be using the `firstListenerPort` setting of the chart.
+You will be using the `LoadBalancer` external service as NodePort is not supported on AKS. The `LoadBalancers` will all need to use the same port so `external.distinct: false`, and you will be using the `firstListenerPort` setting of the chart.
 
 You will need to create static IPs ahead of time to supply to the Helm chart via `external.loadBalancerIP`, as the Kafka broker needs to know the IP Address or DNS name via the `advertised.listeners` setting.
 
