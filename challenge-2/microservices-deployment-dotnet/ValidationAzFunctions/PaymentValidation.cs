@@ -31,7 +31,7 @@ namespace ValidationAzFunctions
                     // Replace these two lines with your processing logic.
                     log.LogInformation($"C# PaymentValidation function processed a message: {messageBody}");
 
-                    // Processing Ticket Validation Requirements
+                    // Processing Payment Validation Requirements
 
                     // Simulating call to 3rd party services by putting a random wait                    
                     Thread.Sleep(timeRandom.Next(10, 2000));
