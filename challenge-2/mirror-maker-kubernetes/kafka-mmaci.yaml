@@ -6,7 +6,7 @@ properties:
   containers:
   - name: mirror-maker
     properties:
-      image: ohlkafka.azurecr.io/ohl-mirrormaker
+      image: rasavant/aci-mirrormaker
       resources:
         requests:
           cpu: 1
